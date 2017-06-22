@@ -14,6 +14,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     var movies: [[String: Any]] = []
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +51,15 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let cell = sender as! UITableViewCell
+        if let indexPath = tableView.indexPath(for: cell) {
+            let movie = movies[indexPath.row]
+            let detailViewController = segue.destination as! DetailedViewController
+            detailViewController.movie = movie
+        }
+    }
+    
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
         let url = URL(string: "https://api.themoviedb.org/3/movie/upcoming?api_key=ab3e3d7326688ce73dd90f58d40024a9&language=en-US&page=1")!
         let session = URLSession(configuration: .default,    delegate: nil, delegateQueue: OperationQueue.main)
@@ -67,7 +77,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             }
         }
         
-            // Tell the refreshControl to stop spinning
+        // Tell the refreshControl to stop spinning
         refreshControl.endRefreshing()
         task.resume()
     }

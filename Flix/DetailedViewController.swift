@@ -8,34 +8,47 @@
 
 import UIKit
 
+enum MovieKeys {
+    static let title = "title"
+    static let release = "release_date"
+    static let rating = "vote_average"
+    static let description = "overview"
+    static let backdropPath = "backdrop_path"
+    static let posterPath = "poster_path"
+}
+
 class DetailedViewController: UIViewController {
 
+    var movie: [String: Any]?
+    
     @IBOutlet weak var backdropView: UIImageView!
     @IBOutlet weak var posterView: UIImageView!
-    @IBOutlet weak var titleView: UILabel!
-    @IBOutlet weak var descriptionView: UILabel!
-    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var releaseDateLabel: UILabel!
+    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let url = URL(string: "https://api.themoviedb.org/3/movie/upcoming?api_key=ab3e3d7326688ce73dd90f58d40024a9&language=en-US&page=1")!
-        let session = URLSession(configuration: .default,    delegate: nil, delegateQueue: OperationQueue.main)
-        session.configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
-        let task = session.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                print(error.localizedDescription)
-            } else if let data = data,
-                let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                print(dataDictionary)
-                
-                // TODO: Get the posts and store in posts property
-//                self.movie = dataDictionary["results"] as! [[String: Any]]
-                // TODO: Reload the table view
-            }
+        if let movie = movie {
+            let backdropPath = movie[MovieKeys.backdropPath] as! String
+            let posterPath = movie[MovieKeys.posterPath] as! String
+            let baseURL = "https://image.tmdb.org/t/p/w500"
+            
+            let backdropURL = URL(string: baseURL + backdropPath)!
+            let posterURL = URL(string: baseURL + posterPath)!
+            
+            backdropView.af_setImage(withURL: backdropURL)
+            posterView.af_setImage(withURL: posterURL)
+            
+            titleLabel.text = movie[MovieKeys.title] as? String
+            releaseDateLabel.text = movie[MovieKeys.release] as? String
+            ratingLabel.text = movie[MovieKeys.rating] as? String
+            descriptionLabel.text = movie[MovieKeys.description] as? String
         }
-        task.resume()
-
+        
+        
         // Do any additional setup after loading the view.
     }
 
