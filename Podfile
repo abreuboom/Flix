@@ -9,5 +9,6 @@ pod 'Alamofire', '~> 4.4'
 pod 'OAuthSwift', '~> 1.1.0'
 pod 'OAuthSwiftAlamofire'
 pod 'AlamofireImage', '~> 3.1'
+pod 'PKHUD', '~> 4.0'
 
 end

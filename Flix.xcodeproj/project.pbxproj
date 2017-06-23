@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2049DDB21EFC8A6C0011C1DA /* GridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2049DDB11EFC8A6C0011C1DA /* GridViewController.swift */; };
+		2049DDB41EFC8ADE0011C1DA /* PosterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2049DDB31EFC8ADE0011C1DA /* PosterCell.swift */; };
 		20A229B61EFB22C3009FDA4C /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A229B51EFB22C3009FDA4C /* MovieCell.swift */; };
 		20C53D9B1EFB39C600DB7581 /* DetailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C53D9A1EFB39C600DB7581 /* DetailedViewController.swift */; };
 		20F4E3661EFB1A9D007C2D1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F4E3651EFB1A9D007C2D1F /* AppDelegate.swift */; };
@@ -37,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2049DDB11EFC8A6C0011C1DA /* GridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridViewController.swift; sourceTree = "<group>"; };
+		2049DDB31EFC8ADE0011C1DA /* PosterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PosterCell.swift; sourceTree = "<group>"; };
 		20A229B51EFB22C3009FDA4C /* MovieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		20C53D9A1EFB39C600DB7581 /* DetailedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedViewController.swift; sourceTree = "<group>"; };
 		20F4E3621EFB1A9D007C2D1F /* Flix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flix.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,6 +116,8 @@
 				20F4E3671EFB1A9D007C2D1F /* MoviesViewController.swift */,
 				20A229B51EFB22C3009FDA4C /* MovieCell.swift */,
 				20F4E3691EFB1A9D007C2D1F /* Main.storyboard */,
+				2049DDB31EFC8ADE0011C1DA /* PosterCell.swift */,
+				2049DDB11EFC8A6C0011C1DA /* GridViewController.swift */,
 				20C53D9A1EFB39C600DB7581 /* DetailedViewController.swift */,
 				20F4E36C1EFB1A9D007C2D1F /* Assets.xcassets */,
 				20F4E36E1EFB1A9D007C2D1F /* LaunchScreen.storyboard */,
@@ -341,6 +347,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				20F4E3681EFB1A9D007C2D1F /* MoviesViewController.swift in Sources */,
+				2049DDB21EFC8A6C0011C1DA /* GridViewController.swift in Sources */,
+				2049DDB41EFC8ADE0011C1DA /* PosterCell.swift in Sources */,
 				20A229B61EFB22C3009FDA4C /* MovieCell.swift in Sources */,
 				20C53D9B1EFB39C600DB7581 /* DetailedViewController.swift in Sources */,
 				20F4E3661EFB1A9D007C2D1F /* AppDelegate.swift in Sources */,
