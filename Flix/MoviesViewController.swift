@@ -10,12 +10,15 @@ import UIKit
 import AlamofireImage
 import PKHUD
 
-class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     var movies: [[String: Any]] = []
     
+    var filteredMovies: [[String: Any]] = []
+    
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var searchBar: UISearchBar!
     
     
     override func viewDidLoad() {
@@ -27,10 +30,13 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         // add refresh control to table view
         tableView.insertSubview(refreshControl, at: 0)
         
+        searchBar.delegate = self
+        
         //Network request snippet
         loadMovieData()
         
         // Do any additional setup after loading the view.
+        
         
     }
     
@@ -44,21 +50,23 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                     print(error.localizedDescription)
                 } else if let data = data,
                     let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                    print(dataDictionary)
                     
-                    HUD.flash(.success, delay: 1.0) { finished in
+                    
                         // Completion Handler
                     // TODO: Get the posts and store in posts property
                     self.movies = dataDictionary["results"] as! [[String: Any]]
+                    self.filteredMovies = self.movies
                     // TODO: Reload the table view
-                    self.tableView.reloadData()
-                }
+                    HUD.flash(.success, delay: 1.0) { finished in
+                        self.tableView.reloadData()
+                    }
             }
         }
         task.resume()
         
         tableView.delegate = self
         tableView.dataSource = self
+        
     }
     
     func alert() {
@@ -83,7 +91,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             }
             else if let data = data,
                 let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                print(dataDictionary)
                 
                 // TODO: Get the posts and store in posts property
                 self.movies = dataDictionary["results"] as! [[String: Any]]
@@ -99,15 +106,15 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return movies.count
+        return filteredMovies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
-        let movie = movies[indexPath.row]
+        let movie = filteredMovies[indexPath.row]
         if let poster = movie["poster_path"] as? String {
             let url = URL(string: "https://image.tmdb.org/t/p/w500" + String(poster))
-            cell.posterView.af_setImage(withURL: url!)
+                        cell.posterView.af_setImage(withURL: url!)
         }
         if let title = movie["title"] as? String {
             cell.movieTitle.text = title
@@ -115,8 +122,35 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         if let overview = movie["overview"] as? String {
             cell.movieOverview.text = overview
         }
-        
+        cell.selectionStyle = .none
         return cell
+        
+    }
+    
+    // This method updates filteredData based on the text in the Search Box
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // When there is no text, filteredData is the same as the original data
+        // When user has entered text into the search box
+        // Use the filter method to iterate over all items in the data array
+        // For each item, return true if the item should be included and false if the
+        // item should NOT be included
+        filteredMovies = searchText.isEmpty ? movies : movies.filter { (movie: [String : Any]) -> Bool in
+            // If dataItem matches the searchText, return true to include it
+            let title = movie["title"] as! String
+            return title.contains(searchText)
+        }
+        
+        tableView.reloadData()
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
     }
     
     override func didReceiveMemoryWarning() {
@@ -127,7 +161,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let cell = sender as! UITableViewCell
         if let indexPath = tableView.indexPath(for: cell) {
-            let movie = movies[indexPath.row]
+            let movie = filteredMovies[indexPath.row]
             let detailViewController = segue.destination as! DetailedViewController
             detailViewController.movie = movie
         }
