@@ -114,7 +114,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let movie = filteredMovies[indexPath.row]
         if let poster = movie["poster_path"] as? String {
             let url = URL(string: "https://image.tmdb.org/t/p/w500" + String(poster))
-                        cell.posterView.af_setImage(withURL: url!)
+            cell.posterView.af_setImage(withURL: url!, placeholderImage: #imageLiteral(resourceName: "Rectangle"), filter: nil, progress: nil, progressQueue: DispatchQueue.main, imageTransition: UIImageView.ImageTransition.crossDissolve(0.5), runImageTransitionIfCached: true, completion: { (response) in})
         }
         if let title = movie["title"] as? String {
             cell.movieTitle.text = title

@@ -126,7 +126,7 @@
             </objects>
             <point key="canvasLocation" x="241" y="902"/>
         </scene>
-        <!--Superhero Movies-->
+        <!--Popular Movies-->
         <scene sceneID="SGc-hc-owb">
             <objects>
                 <viewController id="uRN-Di-kUL" customClass="GridViewController" customModule="Flix" customModuleProvider="target" sceneMemberID="viewController">
@@ -172,7 +172,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Superhero Movies" id="D30-Km-fPZ"/>
+                    <navigationItem key="navigationItem" title="Popular Movies" id="D30-Km-fPZ"/>
                     <connections>
                         <outlet property="collectionView" destination="bxh-3s-Zyo" id="SU5-GC-6Kb"/>
                     </connections>
@@ -325,6 +325,6 @@
         <image name="now_playing_tabbar_item" width="21" height="21"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YgV-7j-5Pd"/>
+        <segue reference="4Bn-HR-E3J"/>
     </inferredMetricsTieBreakers>
 </document>

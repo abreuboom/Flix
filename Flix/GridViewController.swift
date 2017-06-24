@@ -13,6 +13,8 @@ class GridViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     var movies: [[String: Any]] = []
     
+    let apiRequestURL = "https://api.themoviedb.org/3/movie/popular?api_key=ab3e3d7326688ce73dd90f58d40024a9&language=en-US&page=1"
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -27,7 +29,7 @@ class GridViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     func loadMovieData() {
-        let url = URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=ab3e3d7326688ce73dd90f58d40024a9&language=en-US&page=1")!
+        let url = URL(string: apiRequestURL)!
         let session = URLSession(configuration: .default,    delegate: nil, delegateQueue: OperationQueue.main)
         session.configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
         let task = session.dataTask(with: url) { (data, response, error) in
@@ -66,7 +68,7 @@ class GridViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
-        let url = URL(string: "https://api.themoviedb.org/3/movie/similar?api_key=ab3e3d7326688ce73dd90f58d40024a9&language=en-US&page=1")!
+        let url = URL(string: apiRequestURL)!
         let session = URLSession(configuration: .default,    delegate: nil, delegateQueue: OperationQueue.main)
         let task: URLSessionDataTask = session.dataTask(with: url) { (data: Data?, response: URLResponse?, error: Error?) in
             if let error = error {
@@ -99,7 +101,7 @@ class GridViewController: UIViewController, UICollectionViewDataSource, UICollec
         let movie = movies[indexPath.item]
         if let poster = movie["poster_path"] as? String {
             let url = URL(string: "https://image.tmdb.org/t/p/w500" + String(poster))
-            cell.posterView.af_setImage(withURL: url!)
+            cell.posterView.af_setImage(withURL: url!, placeholderImage: #imageLiteral(resourceName: "Rectangle"), filter: nil, progress: nil, progressQueue: DispatchQueue.main, imageTransition: UIImageView.ImageTransition.crossDissolve(0.5), runImageTransitionIfCached: true, completion: { (response) in})
         }
         
         return cell
